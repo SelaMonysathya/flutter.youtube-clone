@@ -89,18 +89,18 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-    Widget _buildVideoSection() {
+  Widget _buildVideoSection() {
     return Column(
-      children: List.generate(5, (index) {
+      children: List.generate(videos.length, (index) {
         return VideoCard(
           onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => DetailPage())),
-          videoUrl: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8c29uZ3xlbnwwfHwwfHw%3D&auto=format&fit=crop&w=800&q=60",
-          duration: "16:14",
-          title: "Ed Sheeran, Martin Garrix, Kygo, Dua Lipa, Avicii, Robin Schulz, The Chainsmokers Style - Feeling Me",
-          channelProfileUrl: "https://images.unsplash.com/photo-1534308143481-c55f00be8bd7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NTB8fHByb2ZpbGV8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=60",
-          channelName: "Haa Taa Deep",
-          view: "13K",
-          dateTime: "5 months ago",
+          videoUrl: videos[index]['videoUrl'],
+          duration: videos[index]['duration'],
+          title: videos[index]['title'],
+          channelProfileUrl: videos[index]['channelProfileUrl'],
+          channelName: videos[index]['channelName'],
+          view: videos[index]['view'],
+          dateTime:videos[index]['dateTime'],
         );
       }),
     );

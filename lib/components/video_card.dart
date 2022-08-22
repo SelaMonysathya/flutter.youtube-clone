@@ -46,7 +46,7 @@ class VideoCard extends StatelessWidget {
                     borderRadius: BorderRadius.circular(defaultRadius / 4),
                     color: black.withOpacity(0.8),
                   ),
-                  child: Text(duration, style: smallStyle,),
+                  child: Text(duration, style: smallStyle.copyWith(color: white),),
                 )
               )
             ],

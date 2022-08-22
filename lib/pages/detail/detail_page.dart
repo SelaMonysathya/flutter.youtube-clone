@@ -20,9 +20,8 @@ class _DetailPageState extends State<DetailPage> {
   @override
   void initState() {
     super.initState();
-    
-    _controller = VideoPlayerController.network(
-      "https://www.fluttercampus.com/video.mp4",
+    _controller = VideoPlayerController.asset(
+      videoDetail,
       videoPlayerOptions: VideoPlayerOptions(mixWithOthers: true),
     );
     _controller.initialize().then((value){
@@ -31,8 +30,17 @@ class _DetailPageState extends State<DetailPage> {
         _controller.play();
       });
     });
-    
   }
+
+  // _onPauseOrContinue() {
+  //   setState(() {
+  //     if(_controller.value.isPlaying) {
+  //       _controller.pause();
+  //     } else {
+  //       _controller.play();
+  //     }
+  //   });
+  // }
 
   @override
   void dispose() {
@@ -55,122 +63,16 @@ class _DetailPageState extends State<DetailPage> {
           Expanded(
             child: ListView(
               children: [
-                Padding(
-                  padding: EdgeInsets.all(defaultPadding),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Expanded(
-                            child: Text(
-                              "Best tiktok songs 🍇 Tiktok hits 2022 - Viral songs latest",
-                              style: subTitleStyle.copyWith(height: 1.5),
-                            ),
-                          ),
-                          SizedBox(width: defaultSPadding,),
-                          Icon(LineIcons.angleDown, size: 20,),
-                        ],
-                      ),
-                      SizedBox(height: defaultSPadding,),
-                      Text("2.4M views • 1y ago", style: smallStyle,)
-                    ],
-                  ),
-                ),
+                _buildInfoSection(),
                 SizedBox(height: defaultSPadding,),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: List.generate(actionItems.length, (index) {
-                      return IconButtonTitle(
-                        onTap: () {},
-                        icon: actionItems[index]['icon'],
-                        title: actionItems[index]['title'],
-                      );
-                    }),
-                  ),
-                ),
+                _buildActionSection(),
                 SizedBox(height: defaultXSPadding,),
                 Divider(thickness: 2, color: grey,),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: defaultPadding, vertical: defaultXSPadding),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Row(
-                          children: [
-                            CircleAvatar(
-                              backgroundImage: NetworkImage("https://images.unsplash.com/photo-1534308143481-c55f00be8bd7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NTB8fHByb2ZpbGV8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=60"),
-                            ),
-                            SizedBox(width: defaultSPadding,),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text("Deep Chill Mix", style: subTitleStyle,),
-                                SizedBox(height: defaultXSPadding,),
-                                Text("539K subscribers", style: smallStyle,),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(width: defaultSPadding,),
-                      TextButton(
-                        onPressed: () {},
-                        child: Text("subscribe".toUpperCase(), style: subTitleStyle.copyWith(color: primary),)
-                      ),
-                    ],
-                  ),
-                ),
+                _buildChannelSection(),
                 Divider(thickness: 2, color: grey,),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              Text("Comments"),
-                              SizedBox(width: defaultSPadding,),
-                              Text("351", style: TextStyle(color: lightGrey),)
-                            ],
-                          ),
-                          Icon(LineIcons.angleDown, size: 20,)
-                        ],
-                      ),
-                      SizedBox(height: defaultPadding,),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          CircleAvatar(
-                            radius: 15,
-                            backgroundImage: NetworkImage("https://images.unsplash.com/photo-1534308143481-c55f00be8bd7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NTB8fHByb2ZpbGV8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=60"),
-                          ),
-                          SizedBox(width: defaultSPadding,),
-                          Flexible(child: Text("Just started playlist and I already know it’s going to be a good one 💗☺️", style: smallStyle.copyWith(color: white),)),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
+                _buildCommentSection(),
                 SizedBox(height: defaultLPadding,),
-                Column(
-                  children: List.generate(5, (index) {
-                    return VideoCard(
-                      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => DetailPage())),
-                      videoUrl: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8c29uZ3xlbnwwfHwwfHw%3D&auto=format&fit=crop&w=800&q=60",
-                      duration: "16:14",
-                      title: "Ed Sheeran, Martin Garrix, Kygo, Dua Lipa, Avicii, Robin Schulz, The Chainsmokers Style - Feeling Me",
-                      channelProfileUrl: "https://images.unsplash.com/photo-1534308143481-c55f00be8bd7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NTB8fHByb2ZpbGV8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=60",
-                      channelName: "Haa Taa Deep",
-                      view: "13K",
-                      dateTime: "5 months ago",
-                    );
-                  }),
-                )
+                _buildRelatedVideoSection()
               ],
             ),
           )
@@ -190,6 +92,7 @@ class _DetailPageState extends State<DetailPage> {
               children: [
                 IconButton(
                   onPressed: () => Navigator.pop(context), 
+                  splashRadius: 25,
                   icon: Icon(LineIcons.angleLeft, size: 20,)
                 ),
                 Expanded(
@@ -217,6 +120,14 @@ class _DetailPageState extends State<DetailPage> {
               ],
             ),
           ),
+          // IconButton(
+          //   onPressed: _onPauseOrContinue,
+          //   splashRadius: 25,
+          //   iconSize: 35,
+          //   icon: _controller.value.isPlaying 
+          //   ? SizedBox()
+          //   : Pulse(child: Icon(LineIcons.pause)),
+          // ),
           Positioned(
             bottom: 0,
             left: 0,
@@ -228,6 +139,132 @@ class _DetailPageState extends State<DetailPage> {
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildInfoSection() {
+    return Padding(
+      padding: EdgeInsets.all(defaultPadding),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: Text(
+                  title,
+                  style: subTitleStyle.copyWith(height: 1.5),
+                ),
+              ),
+              SizedBox(width: defaultSPadding,),
+              Icon(LineIcons.angleDown, size: 20,),
+            ],
+          ),
+          SizedBox(height: defaultSPadding,),
+          Text(viewerAndDateTime, style: smallStyle,)
+        ],
+      ),
+    );
+  }
+
+  Widget _buildActionSection() {
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        children: List.generate(actionItems.length, (index) {
+          return IconButtonTitle(
+            onTap: () {},
+            icon: actionItems[index]['icon'],
+            title: actionItems[index]['title'],
+          );
+        }),
+      ),
+    );
+  }
+
+  Widget _buildChannelSection() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: defaultPadding, vertical: defaultXSPadding),
+      child: Row(
+        children: [
+          Expanded(
+            child: Row(
+              children: [
+                CircleAvatar(
+                  backgroundImage: NetworkImage(channelProfile),
+                ),
+                SizedBox(width: defaultSPadding,),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(channelName, style: subTitleStyle,),
+                    SizedBox(height: defaultXSPadding,),
+                    Text(channelSubscriber, style: smallStyle,),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          SizedBox(width: defaultSPadding,),
+          TextButton(
+            onPressed: () {},
+            child: Text("subscribe".toUpperCase(), style: subTitleStyle.copyWith(color: primary),)
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildCommentSection() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  Text("Comments"),
+                  SizedBox(width: defaultSPadding,),
+                  Text(totalComment, style: TextStyle(color: lightGrey),)
+                ],
+              ),
+              Icon(LineIcons.angleDown, size: 16,)
+            ],
+          ),
+          SizedBox(height: defaultPadding,),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              CircleAvatar(
+                radius: 15,
+                backgroundImage: NetworkImage(userCommentProfile),
+              ),
+              SizedBox(width: defaultSPadding,),
+              Flexible(child: Text(userComment, style: smallStyle.copyWith(color: white),)),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildRelatedVideoSection() {
+    return Column(
+      children: List.generate(relatedVideo.length, (index) {
+        return VideoCard(
+          onTap: () {},
+          videoUrl: relatedVideo[index]['videoUrl'],
+          duration: relatedVideo[index]['duration'],
+          title: relatedVideo[index]['title'],
+          channelProfileUrl: relatedVideo[index]['channelProfileUrl'],
+          channelName: relatedVideo[index]['channelName'],
+          view: relatedVideo[index]['view'],
+          dateTime: relatedVideo[index]['dateTime']
+        );
+      }),
     );
   }
 }
