@@ -1,11 +1,14 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:video_player/video_player.dart';
 import 'package:youtube_clone/components/icon_button_title.dart';
+import 'package:youtube_clone/components/loading_overlay.dart';
 import 'package:youtube_clone/components/video_card.dart';
 import 'package:youtube_clone/dummy_data/detail_json.dart';
 import 'package:youtube_clone/themes/color.dart';
 import 'package:youtube_clone/themes/style.dart';
+import 'package:youtube_clone/utils/global.dart';
 
 class DetailPage extends StatefulWidget {
   const DetailPage({ Key? key }) : super(key: key);
@@ -20,27 +23,24 @@ class _DetailPageState extends State<DetailPage> {
   @override
   void initState() {
     super.initState();
-    _controller = VideoPlayerController.asset(
-      videoDetail,
-      videoPlayerOptions: VideoPlayerOptions(mixWithOthers: true),
-    );
-    _controller.initialize().then((value){
+    _controller = VideoPlayerController.asset(videoDetail);
+    _controller.initialize().then((value) {
       setState(() {
-        _controller.setLooping(true);
         _controller.play();
+        _controller.setLooping(true);
       });
     });
   }
 
-  // _onPauseOrContinue() {
-  //   setState(() {
-  //     if(_controller.value.isPlaying) {
-  //       _controller.pause();
-  //     } else {
-  //       _controller.play();
-  //     }
-  //   });
-  // }
+  _onPauseOrContinue() {
+    setState(() {
+      if(_controller.value.isPlaying) {
+        _controller.pause();
+      } else {
+        _controller.play();
+      }
+    });
+  }
 
   @override
   void dispose() {
@@ -56,27 +56,31 @@ class _DetailPageState extends State<DetailPage> {
   }
 
   Widget _buildBody() {
-    return SafeArea(
-      child: Column(
-        children: [
-          _buildVideoSection(),
-          Expanded(
-            child: ListView(
-              children: [
-                _buildInfoSection(),
-                SizedBox(height: defaultSPadding,),
-                _buildActionSection(),
-                SizedBox(height: defaultXSPadding,),
-                Divider(thickness: 2, color: grey,),
-                _buildChannelSection(),
-                Divider(thickness: 2, color: grey,),
-                _buildCommentSection(),
-                SizedBox(height: defaultLPadding,),
-                _buildRelatedVideoSection()
-              ],
-            ),
-          )
-        ],
+    return LoadingOverlay(
+      isLoading: !_controller.value.isInitialized,
+      child: SafeArea(
+        bottom: false,
+        child: Column(
+          children: [
+            _buildVideoSection(),
+            Expanded(
+              child: ListView(
+                children: [
+                  _buildInfoSection(),
+                  SizedBox(height: defaultSPadding,),
+                  _buildActionSection(),
+                  SizedBox(height: defaultXSPadding,),
+                  Divider(thickness: 2, color: grey,),
+                  _buildChannelSection(),
+                  Divider(thickness: 2, color: grey,),
+                  _buildCommentSection(),
+                  SizedBox(height: defaultLPadding,),
+                  _buildRelatedVideoSection()
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -87,54 +91,93 @@ class _DetailPageState extends State<DetailPage> {
       child: Stack(
         children: [
           VideoPlayer(_controller),
-          Positioned(
-            child: Row(
+          Positioned.fill(
+            child: Column(
               children: [
-                IconButton(
-                  onPressed: () => Navigator.pop(context), 
-                  splashRadius: 25,
-                  icon: Icon(LineIcons.angleLeft, size: 20,)
-                ),
                 Expanded(
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       IconButton(
-                        onPressed: () {}, 
+                        onPressed: () => Navigator.pop(context), 
                         splashRadius: 25,
-                        icon: Icon(LineIcons.retweet),
+                        icon: Icon(LineIcons.angleLeft, size: 20,)
                       ),
-                      IconButton(
-                        onPressed: () {}, 
-                        splashRadius: 25,
-                        icon: Icon(Icons.closed_caption_off),
-                      ),
-                      IconButton(
-                        onPressed: () {}, 
-                        splashRadius: 25,
-                        icon: Icon(LineIcons.cog),
+                      Expanded(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            IconButton(
+                              onPressed: () {}, 
+                              splashRadius: 25,
+                              icon: Icon(LineIcons.retweet),
+                            ),
+                            IconButton(
+                              onPressed: () {}, 
+                              splashRadius: 25,
+                              icon: Icon(Icons.closed_caption_off),
+                            ),
+                            IconButton(
+                              onPressed: () {}, 
+                              splashRadius: 25,
+                              icon: Icon(LineIcons.cog),
+                            ),
+                          ],
+                        )
                       ),
                     ],
-                  )
+                  ),
                 ),
+                Expanded(
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: IconButton(
+                      onPressed: _onPauseOrContinue,
+                      splashRadius: 25,
+                      iconSize: 35,
+                      icon: _controller.value.isPlaying 
+                      ? SizedBox()
+                      : Pulse(
+                        child: CircleAvatar(
+                          backgroundColor: dark.withOpacity(0.8), 
+                          child: Icon(LineIcons.pause, color: white,)
+                        )
+                      ),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: defaultSPadding,),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            ValueListenableBuilder(
+                              valueListenable: _controller,
+                              builder: (context, VideoPlayerValue value, child) {
+                                return Text(videoPlayDuration(value));
+                              }
+                            ),
+                            IconButton(
+                              onPressed: () {}, 
+                              splashRadius: 25,
+                              icon: Icon(LineIcons.expand),
+                            ),
+                          ],
+                        ),
+                      ),
+                      VideoProgressIndicator(
+                        _controller,
+                        allowScrubbing: true,
+                      ),
+                    ],
+                  ),
+                )
               ],
-            ),
-          ),
-          // IconButton(
-          //   onPressed: _onPauseOrContinue,
-          //   splashRadius: 25,
-          //   iconSize: 35,
-          //   icon: _controller.value.isPlaying 
-          //   ? SizedBox()
-          //   : Pulse(child: Icon(LineIcons.pause)),
-          // ),
-          Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: VideoProgressIndicator(
-              _controller, 
-              allowScrubbing: true,
             ),
           ),
         ],

@@ -61,7 +61,7 @@ const List relatedVideo = [
     "videoUrl": "https://i.ytimg.com/vi/YwROoNKoy-A/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCRbAigd2uaX9yBw_MmDllJn1QtPQ",
     "duration": "07:30",
     "title": "Tutu (cute remix) - Alma Zarza x DJ Mamad - Dangling x Dusk Music (Video Lyrics)",
-    "channelProfileUrl": "https://yt3.ggpht.com/rjoh3lshkAiKegUcmzPNVD0OdxYm_uUusUXN5lxEnEoWZyfzpzbwhU7yKN6wr_ZcukKvorXeOQ=s176-c-k-c0x00ffffff-no-rj",
+    "channelProfileUrl": "https://images.unsplash.com/photo-1668211834355-2cdf073f2351?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw0OHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=60",
     "channelName": "Dusk Music ASIA",
     "view": "18M",
     "dateTime": "Jul 27, 2021",
