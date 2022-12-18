@@ -1,16 +1,16 @@
-# youtube_clone
+# YouTube Clone App UI
 
-A new Flutter project.
+![Mockup](https://user-images.githubusercontent.com/45874497/208284570-555ebf89-abb8-4716-9566-6cacaf7b714f.png)
 
-## Getting Started
+Today we gonna build YouTube app #UI using #Flutter. That has three parts such as:
+- Home Page
+- Detail Page
+- Account Page
 
-This project is a starting point for a Flutter application.
+[YouTube Link](https://bit.ly/3yvUL2t)
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Connect with me:
+- [Youtube](https://bit.ly/3u1KPIU)
+- [Facebook Page](https://bit.ly/3rE7Fqj)
+- [Facebook](https://bit.ly/3WuowtA)
+- [Instagram](https://bit.ly/3W5uj9f)
